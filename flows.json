@@ -1,0 +1,274 @@
+[
+    {
+        "id": "38f1022bdc7127aa",
+        "type": "tab",
+        "label": "Fluxo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "cc26c96cef79bab7",
+        "type": "mqtt in",
+        "z": "38f1022bdc7127aa",
+        "name": "",
+        "topic": "pulseira/dados",
+        "qos": "0",
+        "datatype": "utf8",
+        "broker": "57c80ba84b027e78",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 360,
+        "y": 220,
+        "wires": [
+            [
+                "498768c23e8f4912"
+            ]
+        ]
+    },
+    {
+        "id": "498768c23e8f4912",
+        "type": "json",
+        "z": "38f1022bdc7127aa",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 570,
+        "y": 220,
+        "wires": [
+            [
+                "76cd3c56077040e9",
+                "0c14b00904c724d1",
+                "501bc4274a15ba9b"
+            ]
+        ]
+    },
+    {
+        "id": "6668ee399ef50d99",
+        "type": "ui_gauge",
+        "z": "38f1022bdc7127aa",
+        "name": "",
+        "group": "e68baa017754f9cb",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Distância da Água",
+        "label": "cm",
+        "format": "{{msg.payload}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#002aff",
+            "#3e5189",
+            "#8ae2ff"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 990,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "76cd3c56077040e9",
+        "type": "change",
+        "z": "38f1022bdc7127aa",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.distancia",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 770,
+        "y": 120,
+        "wires": [
+            [
+                "6668ee399ef50d99"
+            ]
+        ]
+    },
+    {
+        "id": "0c14b00904c724d1",
+        "type": "debug",
+        "z": "38f1022bdc7127aa",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "501bc4274a15ba9b",
+        "type": "switch",
+        "z": "38f1022bdc7127aa",
+        "name": "",
+        "property": "payload.alerta",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 810,
+        "y": 360,
+        "wires": [
+            [
+                "4c363d8f5b9423e8"
+            ],
+            [
+                "cf5d3dbee48e409e"
+            ]
+        ]
+    },
+    {
+        "id": "4c363d8f5b9423e8",
+        "type": "change",
+        "z": "38f1022bdc7127aa",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "🚨 Submerso — Alerta Ativado",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1030,
+        "y": 320,
+        "wires": [
+            [
+                "96d0bcb69dee6f8a"
+            ]
+        ]
+    },
+    {
+        "id": "cf5d3dbee48e409e",
+        "type": "change",
+        "z": "38f1022bdc7127aa",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "✅ Situação Controlada",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1030,
+        "y": 380,
+        "wires": [
+            [
+                "96d0bcb69dee6f8a"
+            ]
+        ]
+    },
+    {
+        "id": "96d0bcb69dee6f8a",
+        "type": "ui_text",
+        "z": "38f1022bdc7127aa",
+        "group": "e68baa017754f9cb",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Status da Pulseira",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1290,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "57c80ba84b027e78",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "test.mosquitto.org",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "e68baa017754f9cb",
+        "type": "ui_group",
+        "name": "Pulseira",
+        "tab": "31685ffc055e7257",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "31685ffc055e7257",
+        "type": "ui_tab",
+        "name": "VitaQR",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
