@@ -1,7 +1,5 @@
 # GS-2-Sem-2025---Edge-Computing
 
-## GS-2-Sem-2025---Edge-Computing
-
 **VitaQR – Bracelete de Emergência para Enchentes**
 
 🚨 **Detecção automática de submersão**  
